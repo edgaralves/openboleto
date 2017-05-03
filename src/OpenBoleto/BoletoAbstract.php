@@ -1222,6 +1222,7 @@ abstract class BoletoAbstract
             'carteira' => $this->getCarteiraNome(),
             'uso_banco' => $this->getUsoBanco(),
             'codigo_barras' => $this->getImagemCodigoDeBarras(),
+            'numero_codigo_barras' => $this->getNumeroFebraban(),
             'resource_path' => $this->getResourcePath(),
         ));
 
@@ -1344,6 +1345,10 @@ abstract class BoletoAbstract
     public function getImagemCodigoDeBarras()
     {
         $codigo = $this->getNumeroFebraban();
+
+        $generator = new \Picqer\Barcode\BarcodeGeneratorHTML();
+
+        return $generator->getBarcode($codigo, $generator::TYPE_INTERLEAVED_2_5, 1, 40);
 
         $barcodes = array('00110', '10001', '01001', '11000', '00101', '10100', '01100', '00011', '10010', '01010');
 
